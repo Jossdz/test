@@ -1,33 +1,30 @@
-import logo from "./logo.svg"
-import { useState, useEffect } from "react"
-import "./App.css"
+import { loginProcess, logoutProcess, signupProcess } from './services/auth'
+import useInput from './hooks/useInput'
+import { useState } from 'react'
 
 function App() {
-  const [data, setData] = useState(null)
-  useEffect(() => {
-    async function getData() {
-      const { res } = await (
-        await fetch("https://rocky-gorge-52294.herokuapp.com/")
-      ).json()
-      setData(res)
-    }
-    getData()
-  }, [])
+  const [emailBind, email] = useInput()
+  const [passwordBind, password] = useInput()
+  const [user, setUser] = useState(null)
 
+  const signup = async () => {
+    const { data: user } = await signupProcess({ email, password })
+    console.log(user)
+  }
+  const login = async () => {
+    const { data: user } = await loginProcess({ email, password })
+    setUser(user)
+  }
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>{data}</p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div>
+        <input type='text' placeholder='email' {...emailBind} />
+        <input type='password' placeholder='password' {...passwordBind} />
+        <button onClick={signup}>Signup</button>
+        <button onClick={login}>Login</button>
+        <hr />
+        <code>{JSON.stringify(user, null, 2)}</code>
+      </div>
     </div>
   )
 }
