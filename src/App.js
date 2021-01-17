@@ -6,7 +6,9 @@ function App() {
   const [data, setData] = useState(null)
   useEffect(() => {
     async function getData() {
-      const { res } = await (await fetch("http://localhost:3000/")).json()
+      const { res } = await (
+        await fetch("https://rocky-gorge-52294.herokuapp.com/")
+      ).json()
       setData(res)
     }
     getData()
