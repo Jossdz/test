@@ -1,4 +1,4 @@
-import { loginProcess, logoutProcess, signupProcess } from './services/auth'
+import { loginProcess, signupProcess } from './services/auth'
 import useInput from './hooks/useInput'
 import { useState } from 'react'
 
